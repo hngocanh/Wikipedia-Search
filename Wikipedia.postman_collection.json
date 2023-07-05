@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "17654f97-3353-44f2-be84-36070bd0a7dc",
+		"name": "Wikipedia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19177802",
+		"_collection_link": "https://www.postman.com/warped-space-466953/workspace/wikipedia/collection/19177802-17654f97-3353-44f2-be84-36070bd0a7dc?action=share&creator=19177802&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Wikipedia Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseData = pm.response.json();",
+							"",
+							"pm.test(\"Response status code is 200\", () => {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"// Input validation tests",
+							"pm.test(\"Response body is not empty\", () => {",
+							"",
+							"    pm.expect(responseData).to.not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Batchcomplete field is true\", () => {",
+							"",
+							"    pm.expect(responseData.batchcomplete).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"Continue field is an object\", () => {",
+							"",
+							"    pm.expect(responseData.continue).to.be.an('object');",
+							"});",
+							"",
+							"pm.test(\"Query field is an object\", () => {",
+							"",
+							"    pm.expect(responseData.query).to.be.an('object');",
+							"});",
+							"",
+							"pm.test(\"SearchInfo field is an object\", () => {",
+							"",
+							"    pm.expect(responseData.query.searchinfo).to.be.an('object');",
+							"});",
+							"",
+							"pm.test(\"Search field is an array\", () => {",
+							"",
+							"    pm.expect(responseData.query.search).to.be.an('array');",
+							"});",
+							"",
+							"// Output validation tests",
+							"",
+							"pm.test(\"Response time is less than 600ms\", () => {",
+							"    pm.expect(pm.response.responseTime).to.be.below(600);",
+							"});",
+							"",
+							"pm.test(\"Search field contains objects with the required properties\", () => {",
+							"",
+							"    responseData.query.search.forEach(function (item) {",
+							"        pm.expect(item).to.have.property('ns');",
+							"        pm.expect(item).to.have.property('title');",
+							"        pm.expect(item).to.have.property('pageid');",
+							"        pm.expect(item).to.have.property('size');",
+							"        pm.expect(item).to.have.property('wordcount');",
+							"        pm.expect(item).to.have.property('snippet');",
+							"        pm.expect(item).to.have.property('timestamp');",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response contains required fields\", () => {",
+							"",
+							"    pm.expect(responseData).to.be.an('object');",
+							"    pm.expect(responseData).to.have.property('batchcomplete');",
+							"    pm.expect(responseData).to.have.property('continue');",
+							"    pm.expect(responseData).to.have.property('query');",
+							"});",
+							"",
+							"// Security tests",
+							"",
+							"pm.test(\"Strict-Transport-Security header is present\", () => {",
+							"    pm.expect(pm.response.headers.has('Strict-Transport-Security')).to.be.true;",
+							"});",
+							"",
+							"pm.test(\"X-Content-Type-Options header is present and has the value nosniff\", () => {",
+							"    pm.expect(pm.response.headers.has('X-Content-Type-Options')).to.be.true;",
+							"    pm.expect(pm.response.headers.get('X-Content-Type-Options')).to.equal('nosniff');",
+							"});",
+							"",
+							"",
+							"// Error handling test",
+							"",
+							"pm.test(\"Response does not contain an error message\", () => {",
+							"    pm.expect(responseData).to.not.have.property('error');",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&continue=-%7C%7C&formatversion=2&srsearch={{Input}}&sroffset=20",
+					"protocol": "https",
+					"host": [
+						"en",
+						"wikipedia",
+						"org"
+					],
+					"path": [
+						"w",
+						"api.php"
+					],
+					"query": [
+						{
+							"key": "action",
+							"value": "query"
+						},
+						{
+							"key": "format",
+							"value": "json"
+						},
+						{
+							"key": "list",
+							"value": "search"
+						},
+						{
+							"key": "continue",
+							"value": "-%7C%7C"
+						},
+						{
+							"key": "formatversion",
+							"value": "2"
+						},
+						{
+							"key": "srsearch",
+							"value": "{{Input}}"
+						},
+						{
+							"key": "sroffset",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
