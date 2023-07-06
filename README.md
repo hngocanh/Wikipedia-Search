@@ -8,6 +8,6 @@ If you want to run test locally, please follow these steps:
 
 That's it, now you can run tests with 'npm run test' - it will run tests in 3 browsers (chromium, firefox, webkit) in parallel.
 
-Bu default, the tests are run in headless mode. If you want to run them in headed mode, then change configuration to headless: true in playwright.config.js
+By default, the tests are run in headless mode. If you want to run them in headed mode, then change configuration to headless: true in playwright.config.js
 
 In order to view the test report, run 'npx playwright show-report'
