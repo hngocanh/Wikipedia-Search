@@ -39,7 +39,7 @@ export default defineConfig({
       mode: 'on',
       size: { width: 1280, height: 720 }
     },
-    headless: false
+    headless: true
   },
 
   /* Configure projects for major browsers */
